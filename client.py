@@ -15,9 +15,8 @@ UDP_TIMEOUT = 1.0
 
 def mode_tcp(url='/index.html'):
     """
-    HTTP mode: sends a GET request to the Proxy and prints the response.
-    
-    🔧 TUNE: change the default url parameter when calling this
+    HTTP mode: sends a GET request to the Proxy and prints the response.    
+    change the default url parameter when calling this
     e.g. mode_tcp('/about.html') to request a different page
     """
     print(f"\n[TCP MODE] Sending GET {url} via Proxy ({PROXY_HOST}:{PROXY_PORT})")
