@@ -57,7 +57,7 @@ def handle_tcp_client(conn, addr):
         # Convert URL path to local file path
         # e.g. "/index.html" → "./index.html"
         if url == '/':
-            url = '/index.html'   # 🔧 TUNE: change default page if needed
+            url = '/index.html'   # change default page if needed
         filepath = os.path.join(FILES_DIR, url.lstrip('/'))
 
         # --- Try to read and send the file ---
@@ -109,7 +109,7 @@ def start_tcp_server():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind((HOST, TCP_PORT))
-    server.listen(10)  # 🔧 TUNE: max queued connections (10 is fine for assignment)
+    server.listen(10)  # max queued connections (10 is fine for assignment)
     log(f"TCP HTTP Server running on port {TCP_PORT}")
 
     while True:

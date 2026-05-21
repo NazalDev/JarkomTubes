@@ -29,7 +29,7 @@ def url_to_cache_path(url):
     # Remove leading slash and replace remaining slashes with underscores
     safe_name = url.lstrip('/').replace('/', '_')
     if not safe_name:
-        safe_name = 'index.html'   # 🔧 TUNE: default cache filename for '/'
+        safe_name = 'index.html'   # default cache filename for '/'
     return os.path.join(CACHE_DIR, safe_name)
 
 def get_from_cache(url):
@@ -155,7 +155,7 @@ if __name__ == '__main__':
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind((HOST, PROXY_PORT))
-    server.listen(10)  # 🔧 TUNE: max queued connections
+    server.listen(10)  # max queued connections
     log(f"Proxy listening on port {PROXY_PORT} | Forwarding to {SERVER_HOST}:{SERVER_PORT}")
     log(f"Cache directory: {os.path.abspath(CACHE_DIR)}")
 

@@ -157,7 +157,7 @@ if __name__ == '__main__':
         mode = sys.argv[2].lower()
 
         if mode == 'tcp':
-            # 🔧 TUNE: default page to request
+            # default page to request
             url = sys.argv[3] if len(sys.argv) > 3 else '/index.html'
             mode_tcp(url)
 
