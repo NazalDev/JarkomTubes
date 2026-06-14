@@ -12,7 +12,7 @@ SERVER_PORT    = 8000           # Must match TCP_PORT in webserver.py
 CACHE_DIR      = './cache'      # Folder where cached responses are saved
 SERVER_TIMEOUT = 5              
 
-# Lock to prevent race conditions when multiple threads access the cache
+# Lock to prevent race conditions when multiple threads access the cache folder
 cache_lock = threading.Lock()
 
 def log(message):
@@ -51,9 +51,9 @@ def save_to_cache(url, response):
 
 def forward_to_server(request):
     """
-    Sends an HTTP request to the real web server.
-    Returns the full response bytes, or None if server unreachable.
-    Raises socket.timeout if server takes too long.
+    Sends an HTTP request to server
+    Returns the full response bytes or None if server unreachable
+    retun an error when the server is down or takes too long to respond
     """
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(SERVER_TIMEOUT)
@@ -114,9 +114,12 @@ def handle_client(conn, addr):
             # --- CACHE MISS ---
             try:
                 response = forward_to_server(request)
-
-                # Check if server returned an error status                
-                save_to_cache(url, response)
+                
+                
+                first_line = response.split(b'\r\n')[0].decode('utf-8', errors='ignore')
+                # check if the response is 200 OK before caching
+                if '200 OK' in first_line:
+                    save_to_cache(url, response)
                 conn.send(response)
                 elapsed = (datetime.datetime.now() - start_time).total_seconds() * 1000
                 log(f"CACHE MISS | {addr[0]} | {url} | {elapsed:.1f}ms (forwarded to server)")

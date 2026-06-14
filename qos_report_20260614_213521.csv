@@ -1,0 +1,25 @@
+=== Per-Packet Detail ===
+Packet,Status,RTT (ms)
+1,received,153.13
+2,received,4.72
+3,received,4.84
+4,received,6.00
+5,received,6.03
+6,received,5.57
+7,received,5.01
+8,received,2.99
+9,received,5.67
+10,received,9.31
+
+=== Summary Statistics ===
+Metric,Value
+Server,10.99.215.47:9000
+Timestamp,2026-06-14 21:35:21
+Packets Sent,10
+Packets Received,10
+Packet Loss (%),0.0
+RTT Min (ms),2.99
+RTT Avg (ms),20.33
+RTT Max (ms),153.13
+Jitter (ms),46.24
+Throughput (kbps),9.80

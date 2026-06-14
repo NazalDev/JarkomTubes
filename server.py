@@ -3,10 +3,11 @@ import threading
 import os
 import datetime
 
-HOST = '10.134.74.178'  # Change to your server's IP address
+HOST = '10.175.102.178'  # Change to your server's IP address
 TCP_PORT = 8001        # Port for HTTP requests from Proxy
 UDP_PORT = 9001        # Port for UDP echo (QoS testing)
-FILES_DIR = './'       # Folder where your HTML files are stored (same folder as this script)
+FILES_DIR = './HTML/'       # Folder where your HTML files are stored
+MAX_CONNECTIONS = 10 # Max queued connections
 
 def get_content_type(filename):
     """Returns the correct Content-Type based on file extension."""
@@ -105,30 +106,30 @@ def handle_tcp_client(conn, addr):
         conn.close()
 
 def start_tcp_server():
-    """Main TCP server loop. Accepts connections and spawns a thread for each."""
+    """TCP Server loop. listens for a connection and make a new thread"""
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind((HOST, TCP_PORT))
-    server.listen(10)  # max queued connections (10 is fine for assignment)
+    server.listen(MAX_CONNECTIONS)  # max quequed connections
     log(f"TCP HTTP Server running on port {TCP_PORT}")
 
     while True:
         conn, addr = server.accept()
         log(f"New TCP connection from {addr[0]}:{addr[1]}")
-        # Spawn a new thread for each client so we don't block
+        # Make a new thread every time a client is connected
         t = threading.Thread(target=handle_tcp_client, args=(conn, addr))
         t.daemon = True
         t.start()
 
 def start_udp_server():
-    """UDP echo server. Receives a packet and sends it straight back."""
+    """UDP echo server. Receives a packet and sends it straight back for QoS Analysis."""
     server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     server.bind((HOST, UDP_PORT))
     log(f"UDP Echo Server running on port {UDP_PORT}")
 
     while True:        
         data, addr = server.recvfrom(1024)
-        server.sendto(data, addr)  # Echo back unchanged
+        server.sendto(data, addr) # immediate echo reply
         log(f"UDP echo | {addr[0]}:{addr[1]} | payload: {data.decode(errors='ignore')}")
 
 # --- Entry point ---
