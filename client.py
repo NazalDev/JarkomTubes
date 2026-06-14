@@ -2,12 +2,10 @@ import socket
 import time
 import sys
 
-PROXY_HOST  = '127.0.0.1'                               
-                            
+PROXY_HOST  = '127.0.0.1'                                                    
 PROXY_PORT  = 8080           # Must match PROXY_PORT in proxy.py
 
-SERVER_HOST = '127.0.0.1'   
-                             
+SERVER_HOST = '127.0.0.1'                               
 SERVER_PORT = 9000           # Must match UDP_PORT in webserver.py
 
 UDP_COUNT   = 10             

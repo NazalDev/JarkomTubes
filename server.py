@@ -3,9 +3,9 @@ import threading
 import os
 import datetime
 
-HOST = '0.0.0.0'       # Listen on all interfaces (don't change unless you know why)
-TCP_PORT = 8000        # Port for HTTP requests from Proxy
-UDP_PORT = 9000        # Port for UDP echo (QoS testing)
+HOST = '10.134.74.178'  # Change to your server's IP address
+TCP_PORT = 8001        # Port for HTTP requests from Proxy
+UDP_PORT = 9001        # Port for UDP echo (QoS testing)
 FILES_DIR = './'       # Folder where your HTML files are stored (same folder as this script)
 
 def get_content_type(filename):
